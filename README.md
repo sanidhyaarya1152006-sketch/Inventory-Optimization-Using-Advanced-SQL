@@ -111,23 +111,25 @@ All analytics use:
 
 ---
 
-##  Project Structure
+## 📂 Project Structure
+
+```
 project/
 │
 ├── bronze_ddl.sql
 ├── proc_load_bronze.sql
-│
 ├── silver_ddl.sql
 ├── proc_load_silver.sql
 │
 ├── analysis/
-│ ├── stock_summary.sql
-│ ├── low_inventory.sql
-│ ├── reorder_point.sql
-│ ├── turnover_ratio.sql
-│ └── kpi_summary.sql
+│   ├── stock_summary.sql
+│   ├── low_inventory.sql
+│   ├── reorder_point.sql
+│   ├── turnover_ratio.sql
+│   └── kpi_summary.sql
 │
 └── README.md
+```
 
 
 ---
