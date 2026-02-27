@@ -1,136 +1,117 @@
- Inventory Optimization Using Advanced SQL Analytics
+#  Inventory Optimization Using Advanced SQL Analytics
 
-A scalable ETL + Analytics pipeline in MySQL designed to solve real-world retail inventory inefficiencies through structured data modeling, validation, and advanced SQL analysis.
+A production-style **ETL + Analytics pipeline in MySQL** that transforms raw retail inventory data into actionable business insights.
 
- Project Overview
+This project solves real-world inventory problems like stockouts, overstocking, and reactive replenishment using structured data modeling and advanced SQL analytics.
 
-Retail businesses often struggle with:
+---
 
-Frequent stockouts of high-demand products
+##  Problem Statement
 
-Overstocking of slow-moving SKUs
+Retail businesses commonly face:
 
-High holding costs
+-  Frequent stockouts of high-demand products  
+-  Overstocking of slow-moving SKUs  
+-  High inventory holding costs  
+-  Reactive (non-predictive) replenishment  
+-  Limited SKU-level visibility  
 
-Reactive inventory planning
+This project builds a scalable SQL architecture to address these inefficiencies.
 
-Lack of real-time KPI visibility
+---
 
-This project builds a layered SQL data architecture to transform raw transactional data into actionable inventory intelligence.
+##  Architecture Overview
 
- Architecture
+The solution follows a 3-layer Medallion Architecture:
 
-The solution follows a 3-layer Medallion Architecture approach:
+Raw Data → Bronze Layer → Silver Layer → Analytics Layer
 
-Raw Data → Bronze Layer → Silver Layer → Analytical Layer
-🔹 Bronze Layer (Raw Ingestion)
+---
 
-Stores raw CSV data
+##  Bronze Layer – Raw Data Ingestion
 
-Uses LOAD DATA INFILE
+**Purpose:** Store and ingest raw CSV data efficiently.
 
-Designed for scalable ingestion
+- Bulk loading using `LOAD DATA INFILE`
+- Minimal transformation
+- Designed for scalability
 
-Minimal transformation
+**Files:**
+- `bronze_ddl.sql`
+- `proc_load_bronze.sql`
 
-Files:
+---
 
-bronze_ddl.sql
+##  Silver Layer – Data Cleaning & Normalization
 
-proc_load_bronze.sql
+**Purpose:** Transform raw data into a clean relational schema.
 
-🔸 Silver Layer (Data Cleaning & Normalization)
+Features:
+- Referential integrity with foreign keys
+- Composite keys
+- Deduplication using `ROW_NUMBER()`
+- Standardized string fields
+- Date validation checks
 
-Structured relational schema
+**Core Tables:**
+- Products  
+- Stores  
+- Inventory  
+- Sales  
+- Orders  
+- Weather  
+- Forecasts  
 
-Referential integrity with foreign keys
+**Files:**
+- `silver_ddl.sql`
+- `proc_load_silver.sql`
 
-Composite key design
+---
 
-Data standardization & deduplication
+##  Analytical Layer – Business Intelligence
 
-Tables:
+Modular SQL scripts generate actionable insights.
 
-Products
+###  Stock Summary
+- Inventory rollups (total, regional, store-level)
+- Detects understocked & overstocked products
 
-Stores
+###  Low Inventory Detection
+- 7-day reorder threshold
+- Based on 30-day sales history
 
-Inventory
+###  Reorder Point Calculation
 
-Sales
+Reorder Point = Average Daily Demand × 7
 
-Orders
+(Optional safety buffer supported)
 
-Weather
+###  Inventory Turnover Analysis
+- Monthly turnover ratio
+- Classification: High / Moderate / Low
 
-Forecasts
+###  KPI Summary
+- Stockout rate
+- Inventory aging
+- Average inventory levels
 
-Files:
+All analytics use:
+- CTEs
+- Window functions
+- Aggregations
 
-silver_ddl.sql
+---
 
-proc_load_silver.sql
+##  Tech Stack
 
- Data Quality Checks
+- MySQL  
+- Advanced SQL (CTEs, Window Functions)  
+- Relational Data Modeling  
+- ETL Pipeline Design  
 
-Deduplication using ROW_NUMBER() and CTEs
+---
 
-String trimming & standardization
-
-Unique ID validation
-
-Date consistency checks
-
-Removal of duplicate weather entries
-
-Ensures reliable downstream analytics.
-
- Analytical Layer (Business Intelligence)
-
-Located in the analysis/ folder.
-
-1) Stock Summary
-
-Regional & store-level rollups
-
-Understocked & overstocked detection
-
-2️) Low Inventory Detection
-
-7-day reorder threshold
-
-Based on 30-day historical demand
-
-3️) Reorder Point Calculation
-Reorder Point = Avg Daily Demand × 7
-
-Optional safety buffer supported.
-
-4️) Inventory Turnover Analysis
-
-Monthly turnover ratio
-
-Classification: High / Moderate / Low
-
-5️) KPI Summary
-
-Stockout rate
-
-Inventory aging
-
-Average stock levels
-
-🛠 Tech Stack
-
-MySQL
-
-Advanced SQL (CTEs, Window Functions, Aggregations)
-
-Relational Data Modeling
-
-ETL Pipeline Design
-
- Project Structure
+##  Project Structure
 project/
 │
 ├── bronze_ddl.sql
@@ -140,44 +121,33 @@ project/
 ├── proc_load_silver.sql
 │
 ├── analysis/
-│   ├── stock_summary.sql
-│   ├── low_inventory.sql
-│   ├── reorder_point.sql
-│   ├── turnover_ratio.sql
-│   └── kpi_summary.sql
+│ ├── stock_summary.sql
+│ ├── low_inventory.sql
+│ ├── reorder_point.sql
+│ ├── turnover_ratio.sql
+│ └── kpi_summary.sql
 │
 └── README.md
- Business Impact
-
-✔ Reduced stockouts
-✔ Lower holding costs
-✔ Data-driven reorder decisions
-✔ Improved working capital utilization
-✔ Scalable foundation for BI dashboards
-
- Key Learnings
-
-Designing layered data architecture
-
-Building production-style SQL ETL pipelines
-
-Writing modular analytical SQL
-
-Implementing real-world inventory KPIs
-
-Data validation before analytics
 
 
- Future Improvements
+---
 
-Add safety stock calculation using demand variability
+##  Business Impact
 
-Integrate lead-time forecasting
+✔ Reduced stockouts  
+✔ Smarter reorder decisions  
+✔ Lower holding costs  
+✔ Improved working capital utilization  
+✔ Data-driven inventory planning  
 
-Connect to BI tools (Power BI / Metabase)
+---
 
-Automate daily pipeline scheduling
+##  Key Skills Demonstrated
 
-Connect to BI tools (Power BI / Metabase)
+- Layered Data Architecture Design  
+- Production-style SQL ETL Pipelines  
+- Advanced Analytical SQL  
+- Inventory KPI Development  
+- Business Problem Translation into Data Solutions  
+  
 
-Automate daily pipeline scheduling
